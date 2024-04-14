@@ -33,8 +33,9 @@ class MercadoLibreAPI:
     def save_to_csv(self):
         with open("product_data.csv", "w", newline="") as csvfile:
             fieldnames = [
-                "id", "title", "price", "currency_id", "available_quantity",
-                "condition", "permalink", "thumbnail_id", "shipping.free_shipping"
+                "id", "title", "base_price", "price", "currency_id", "initial_quantity",
+                "status", "condition", "permalink", "thumbnail_id", "shipping.free_shipping",
+                "date_created", "last_updated"
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
@@ -44,12 +45,17 @@ class MercadoLibreAPI:
                     row = {
                         "id": item_details["id"],
                         "title": item_details["title"],
+                        "base_price": item_details["base_price"],
                         "price": item_details["price"],
                         "currency_id": item_details["currency_id"],
+                        "initial_quantity": item_details["initial_quantity"],
+                        "status": item_details["status"],
                         "condition": item_details["condition"],
                         "permalink": item_details["permalink"],
                         "thumbnail_id": item_details["thumbnail"],
-                        "shipping.free_shipping": item_details["shipping"]["free_shipping"]
+                        "shipping.free_shipping": item_details["shipping"]["free_shipping"],
+                        "date_created": item_details["date_created"],
+                        "last_updated": item_details["last_updated"]
                     }
                     writer.writerow(row)
 
